@@ -62,12 +62,13 @@ delta_22 = (tot_ac_22 - tot_ac_21)/tot_ac_21*100
 df_depto_annos=df_colombia_continental.groupby(['DEPARTAMENTO', 'AÑO SERVICIO'])['ENERGÍA ACTIVA'].sum().reset_index()
 departamentos = df_depto_annos['DEPARTAMENTO'].unique().tolist()
 
+
+
 #####################################################
 #                       VISUALIZACION EN STREAMLIT  #
 #####################################################
-
 st.set_page_config(
-    page_title='Zonas No Interconectadas',
+    page_title='⚡Zonas No Interconectadas',
     layout='centered',
     initial_sidebar_state='collapsed'
     )
@@ -75,22 +76,21 @@ st.markdown(
     '''
     <style>
         .block-container {
-        max-width: 900px;
+        max-width: 1200px;
         }
+
     ''',
     unsafe_allow_html=True
 )
 
 
-#st.text(tot_ac_25)
 # st.title('Dashboard Zonas No Interconectadas')
 # st.header('Análisis de datos')
 # st.subheader('Bootcamp Talento Tech')
 
-
 st.markdown('<a id="inicio"></a><br><br>', unsafe_allow_html=True)
 st.image('img/energia.png')
-st.caption('Aplicacion realizada por Luz Adriana Salas - luzasalas@gmail.com')
+st.caption('Aplicacion desarrollada por Julián Darío Giraldo Ocampo - ingenieria@juliangiraldo.co')
 #####################################################################
 #                       TAMAÑO DEL CONJUNTO DE DATOS                #
 # ###################################################################
@@ -103,7 +103,6 @@ with st.container(border=True):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric('Número de Variable', variable, border=True)
-
 
     with col2:
        st.metric('Número de Observaciones', observaciones, border=True)
@@ -121,7 +120,7 @@ with st.container(border=True):
     with st.expander('Ver conjunto de datos completo'):
         st.dataframe(df)   
 
-    with st.expander('VerDatos de Energía Activa por Departmaneto y Año'):
+    with st.expander('Ver Datos de Energía Activa por Departamento y Año'):
         st.dataframe(df_pivote)
 
 ################################################################################# 
@@ -129,7 +128,7 @@ with st.container(border=True):
 #################################################################################
 st.markdown('<a id="evolucion"></a><br><br>', unsafe_allow_html=True)
 with st.container(border=True):
-    st.html('<font size=5><font color=#3D6E85>Evolución de energía activa por departamento</font>')
+    st.html('<font size=5><font color=#3D6E85>Evolución de Energía Activa por Departamento</font>')
 
     #Desplegable para seleccionar departamento
     depto_selec = st.selectbox(
@@ -144,17 +143,16 @@ with st.container(border=True):
     fig_barras=go.Figure()
 
     #2. Agregar las barras a fig_barras que es el oobjeto Figure
-    fig_barras.add_trace(
-        go.Bar(
-            x=df_departatamento['ENERGÍA ACTIVA'],
-            y=df_departatamento['AÑO SERVICIO'].astype(str),
-            orientation='h',
-            marker_color='#4E7F96',
-            text = df_departatamento['ENERGÍA ACTIVA'],
-            texttemplate='%{text:,.0f}',
-            textposition='auto'
-        )
-    )
+    fig_barras.add_trace(go.Bar(        
+        x=df_departatamento['ENERGÍA ACTIVA'],
+        y=df_departatamento['AÑO SERVICIO'].astype(str),
+        orientation='h',
+        marker_color='#4E7F96',
+        text = df_departatamento['ENERGÍA ACTIVA'],
+        texttemplate='%{text:,.0f}',
+        textposition='auto'
+    ))
+
     # 3. Actualizar el objeto Figure con el diseño deseado
     fig_barras.update_layout(
         height=400,
@@ -174,7 +172,6 @@ st.markdown('<a id="indicadores"></a><br><br>', unsafe_allow_html=True)
 with st.container(border=True):
     st.html('<h2><font color=#3D6E85>Indicadores de Energía Activa por año en Millones de kWh</font>')
     col5, col6, col7, col8 = st.columns(4)
-
     col5.metric(
         label='2022',
         value= round(tot_ac_22/1000000,2),
@@ -202,25 +199,24 @@ with st.container(border=True):
         value= round(tot_ac_25/1000000,2),
         delta= f'{round(delta_25,2)}%',
         border=True
-    )
+    )  
 
-  
+    with st.container(border=True):
+        df_activa = df_activa [[2022,2023,2024,2025]].T
 
-with st.container(border=True):
-    df_activa = df_activa [[2022,2023,2024,2025]].T
+        fig = go.Figure()
+        fig.add_trace(
+            go.Scatter(
+                x=df_activa.index,
+                y=df_activa[0],
+                mode='lines+markers',
+                line=dict(color="#4E7F96")
+            )    
+        )
+        fig.update_layout(height=300)
+        st.plotly_chart(fig, config= {'scrollZoom' : False})
+        st.caption('*Fuente Datos abiertos Gobierno Nacional*')
 
-    fig = go.Figure()
-    fig.add_trace(
-        go.Scatter(
-            x=df_activa.index,
-            y=df_activa[0],
-            mode='lines+markers',
-            line=dict(color="#4E7F96")
-        )    
-    )
-
-    st.plotly_chart(fig)
-    st.caption('**Fuente Datos abiertos Gobierno Nacional**')
 
 #################################################################
 #   INDICADORES DE ENERGIA ACTIVA Y REACTIVA POR AÑO EN MILLONES DE KmH    #
@@ -232,7 +228,7 @@ with st.container(border=True):
 
     with col9:
         # Del df_agupado ordenamos por Energía Activa descendente y elegimos los 5 primeros        
-        st.dataframe(df_agrupado)
+        #st.dataframe(df_agrupado)
         df_mayores = df_agrupado.sort_values(by='ENERGÍA ACTIVA', ascending=False).head(5)
 
         #1. Crear el objeto y agregar graficos
