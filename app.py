@@ -88,6 +88,7 @@ st.markdown(
 
 st.markdown('<a id="inicio"></a><br><br>', unsafe_allow_html=True)
 st.image('img/energia.png')
+st.caption('Aplicacion realizada por Luz Adriana Salas - luzasalas@gmail.com')
 #####################################################################
 #                       TAMAÑO DEL CONJUNTO DE DATOS                #
 # ###################################################################
