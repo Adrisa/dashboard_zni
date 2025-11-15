@@ -89,7 +89,7 @@ st.markdown(
 # st.subheader('Bootcamp Talento Tech')
 
 st.markdown('<a id="inicio"></a><br><br>', unsafe_allow_html=True)
-st.image('img/energia.png')
+st.image('img/Energia.png')
 st.caption('Aplicacion desarrollada por Julián Darío Giraldo Ocampo - ingenieria@juliangiraldo.co')
 #####################################################################
 #                       TAMAÑO DEL CONJUNTO DE DATOS                #
@@ -347,5 +347,5 @@ with st.sidebar.container():
     st.markdown('[Acerca de los Datos](#acerca-de)')
     st.markdown('[Evolución de Energía Activa](#evolucion)')
     st.markdown('[Indicadores de Energía Activa](#indicadores)')
-    st.markdown('[Gráfico por departamento](#barras)')
-    st.markdown('[Gráfico por municipio](#tortas)')
+    st.markdown('[Gráfico por Municipio](#barras)')
+    st.markdown('[Gráfico por Departamento](#tortas)')
