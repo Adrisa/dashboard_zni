@@ -68,7 +68,9 @@ departamentos = df_depto_annos['DEPARTAMENTO'].unique().tolist()
 
 st.set_page_config(
     page_title='Zonas No Interconectadas',
-    layout='centered')
+    layout='centered',
+    initial_sidebar_state='collapsed'
+    )
 st.markdown(
     '''
     <style>
